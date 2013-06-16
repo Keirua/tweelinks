@@ -1,0 +1,27 @@
+{
+  "name": "keirua/tweelinks",
+  "description": "An OAuth 1.0A library written in PHP by @themattharris, specifically for use with the Twitter API",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "themattharris",
+      "email": "clement@keiruaprod.fr",
+      "role": "Developer"
+    }
+  ],
+  "keywords": [
+    "twitter",
+    "oauth"
+  ],
+  "support": {
+    "issues": "https://github.com/keirua/tweelinks/issues"
+  },
+  "require": {
+    "php": ">=5.3.0",
+    "ext-curl": "*",
+    "themattharris/tmhoauth":"*"
+  },
+  "autoload": {
+    "psr-0": { "tweelinks": "" }
+  }
+}
