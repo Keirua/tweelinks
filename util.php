@@ -23,7 +23,6 @@ function getTitle($url){
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_MAXREDIRS, 5); 
-    // curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 
     $content = curl_exec($ch);
     

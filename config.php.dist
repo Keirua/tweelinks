@@ -11,6 +11,7 @@ $config = array (
       'consumer_key'    => 'consumer_key',
       'consumer_secret' => 'consumer_secret',
       'user_token'      => 'user_token',
-      'user_secret'     => 'user_secret'
+      'user_secret'     => 'user_secret',
+      'username'        => 'username_without@',
     )
 );

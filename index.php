@@ -1,5 +1,7 @@
 <?php
 
+header('Content-Type: text/html; charset=utf-8');
+
 require __DIR__.'/vendor/autoload.php';
 include_once 'config.php';
 include_once 'db.php';
@@ -16,8 +18,6 @@ $tmhOAuth = new tmhOAuth(array(
 ));
 
 
-
-
 /*
     Find the latest recorded tweet
 */
@@ -29,7 +29,7 @@ $latest_twitter_id = $lastest_id_c['latest_tw_id'];
     We fetch the new tweets since the last recorded tweet we have
 */
 $params = array(
-    'screen_name' => 'clemkeirua',
+    'screen_name' => $config['twitter']['username'],
     'count' => '200',
     'trim_user' => '1',
     'since_id' => $latest_twitter_id
@@ -72,12 +72,12 @@ if ($code == 200) {
                             '$currUrl',
                             '$timestamp',
                             '$title');";
+                echo $statement;
                 $q = mysql_query ($statement);
             }
         }
 
         $params['max_id'] = $tweets[count($tweets) - 1]->id_str;
-
     }
     else{
         echo 'No new tweets !<br />';
