@@ -1,1 +1,16 @@
-config.php.dist
+<?php
+
+$config = array (
+    'db' => array (
+        'host'      => 'host',
+        'login'     => 'login',
+        'password'  => 'password',
+        'db_name'   => 'db',
+    ),
+    'twitter' => array (
+      'consumer_key'    => 'consumer_key',
+      'consumer_secret' => 'consumer_secret',
+      'user_token'      => 'user_token',
+      'user_secret'     => 'user_secret'
+    )
+);
