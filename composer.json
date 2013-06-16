@@ -1,10 +1,10 @@
 {
   "name": "keirua/tweelinks",
-  "description": "An OAuth 1.0A library written in PHP by @themattharris, specifically for use with the Twitter API",
+  "description": "Small tool for displaying all the URLs contained in your tweets",
   "license": "Apache-2.0",
   "authors": [
     {
-      "name": "themattharris",
+      "name": "clemkeirua",
       "email": "clement@keiruaprod.fr",
       "role": "Developer"
     }
@@ -23,6 +23,6 @@
     "themattharris/tmhoauth":"*"
   },
   "autoload": {
-    "psr-0": { "tweelinks": "" }
+    "classmap": ["src/","vendor/"]
   }
 }
