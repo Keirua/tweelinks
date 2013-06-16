@@ -1,4 +1,4 @@
-### Tweelinks
+# Tweelinks
 
 A small API for displaying one's tweets that contains links. I use it to keep track of interesting links for my technological watch, since I tweet a lot of links that I find useful, interesting or worth reading.
 
@@ -24,11 +24,11 @@ The current version is based on MySQL, and requires PDO and curl to be enabled. 
 
 ## Installation
 
-# Create a twitter application
+### Create a twitter application
 
 It sucks a bit, but since APIv1.1 you need to authenticate through OAuth, and to have credentials for that. It's not that hard.
 
-# Create a table tweelink in your database
+### Create a table tweelink in your database
 
     CREATE TABLE IF NOT EXISTS `tweelink` (
       `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -39,8 +39,8 @@ It sucks a bit, but since APIv1.1 you need to authenticate through OAuth, and to
       PRIMARY KEY (`id`)
     ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1695 ;
 
-# Create a config.php file, based on config.php.dist.
+### Create a config.php file, based on config.php.dist.
 You will need to provide the twitter's application info, to provide you mysql configuration info, and to provide an username
 
-# That's it !
+### That's it !
 Now you can run index. It might take a while on the first execution because of all the curl's, but you see your tweets with links.
