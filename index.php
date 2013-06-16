@@ -22,8 +22,10 @@ $tmhOAuth = new tmhOAuth(array(
     Find the latest recorded tweet
 */
 $lastest_id_query = 'SELECT MAX(tw_idstr) AS latest_tw_id FROM `tweelink`';
-$lastest_id_c = mysql_fetch_assoc (mysql_query($lastest_id_query));
-$latest_twitter_id = $lastest_id_c['latest_tw_id'];
+$st = $db->prepare( $lastest_id_query );
+$st->execute();
+$resul = $st->fetch();
+$latest_twitter_id = $resul['latest_tw_id'];
 
 /*
     We fetch the new tweets since the last recorded tweet we have
@@ -56,28 +58,43 @@ if ($code == 200) {
 
     if (count($tweets) != 0)
     {
-        foreach ($tweets as $tweet) {
-            $timestamp = strtotime($tweet->created_at);
-            $thisMonth = date ('Y-m', $timestamp);
-            $currIdStr = $tweet->id_str;
+        try {
+            $db->beginTransaction();
 
-            for ($i = 0; $i < count ($tweet->entities->urls); ++$i)  {
-                // Even though we get the expanded url, we need to
-                // follow the redirections in order to get a proper title 
-                $currUrl = getFinalUrl($tweet->entities->urls[$i]->expanded_url);
-                $title = addslashes (trim(getTitle ($currUrl)));
+            foreach ($tweets as $tweet) {
+                $timestamp = strtotime($tweet->created_at);
+                $thisMonth = date ('Y-m', $timestamp);
+                $currIdStr = $tweet->id_str;
 
-                $statement = "INSERT INTO tweelink (tw_idstr, url, timestamp, title)
-                    VALUES ('$currIdStr',
-                            '$currUrl',
-                            '$timestamp',
-                            '$title');";
-                echo $statement;
-                $q = mysql_query ($statement);
+                for ($i = 0; $i < count ($tweet->entities->urls); ++$i)  {
+                    // Even though we get the expanded url, we need to
+                    // follow the redirections in order to get a proper title 
+                    $currUrl = getFinalUrl($tweet->entities->urls[$i]->expanded_url);
+                    $title = addslashes (trim(getTitle ($currUrl)));
+                    
+                    $query = "INSERT INTO tweelink (tw_idstr, url, timestamp, title)
+                    VALUES (:currIdStr,
+                            :currUrl,
+                            :timest,
+                            :title);";
+
+                    $rq = $db->prepare($query);
+                    $rq->bindParam(':currIdStr', $currIdStr);
+                    $rq->bindParam(':currUrl', $currUrl);
+                    $rq->bindParam(':timest', $timestamp);
+                    $rq->bindParam(':title', $title);
+                    $rq->execute();
+                }
             }
-        }
 
-        $params['max_id'] = $tweets[count($tweets) - 1]->id_str;
+            $db->commit();
+        }
+        catch (PDOException $e)
+        {
+            $db->rollback();
+            echo $e->getMessage();
+        }
+        // $params['max_id'] = $tweets[count($tweets) - 1]->id_str;
     }
     else{
         echo 'No new tweets !<br />';
@@ -91,9 +108,14 @@ else{
     All the tweets are displayed, sorted by month
 */
 $currMonth = null;
-$db_content = mysql_query('select * from tweelink order by timestamp desc');
+$sql = 'select * from tweelink order by timestamp desc';
+$st = $db -> prepare( $sql );
+$st-> execute();
+$result = $st -> fetchAll();
+
 echo '<ul>';
-while ($row = mysql_fetch_assoc($db_content)){
+foreach ($result as $row){
+
     $thisMonth = date ('Y-m', $row ['timestamp']);
     if ($currMonth == null || $thisMonth != $currMonth) {
         $currMonth = $thisMonth;

@@ -2,5 +2,5 @@
 
 require __DIR__.'/config.php';
 
-mysql_connect($config['db']['host'], $config['db']['login'], $config['db']['password']);
-mysql_select_db($config['db']['db_name']);
+$db = new PDO('mysql:host='.$config['db']['host'].';dbname='.$config['db']['db_name'], $config['db']['login'], $config['db']['password']);
+
