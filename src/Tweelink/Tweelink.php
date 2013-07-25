@@ -116,19 +116,20 @@ class Tweelink {
         $st-> execute();
         $result = $st->fetchAll();
 
-        echo '<ul>';
+        echo '<ol>';
         foreach ($result as $row){
 
             $thisMonth = date ('Y-m', $row ['timestamp']);
             if ($currMonth == null || $thisMonth != $currMonth) {
                 $currMonth = $thisMonth;
-                echo '</ul><h3>'.$currMonth.'</h3><ul>';
+                echo '</ol><h3>'.$currMonth.'</h3><ol>';
             }
 
             $title = empty($row['title']) ?$row['url'] : $row['title'];
 
-            echo '<li><a href="'.$row['url'].'">'.$title.'</a></li>';
+            echo '<li><div class="tweelink"><p>'.$title.'</p> <em><a href="'.$row['url'].'">(lien)</a></em></div></li>';
         }
+        echo '</ol>';
     }
 
 
