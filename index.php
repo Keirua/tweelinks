@@ -27,12 +27,10 @@ require __DIR__.'/config.php';
 			margin-bottom: 15px;
 		 }
 		ol { font-style:italic; font-size:18px; color:;  }
-		ol .tweelink { border-left: 1px solid #999; ; padding-left: 10px; padding-bottom: 10px}
+		ol .tweelink { border-left: 1px solid #666; ; padding-left: 10px; padding-bottom: 10px}
 		ol  p {  display: inline }
-		/*ol  li {  padding-bottom: 10px }*/
-		ol li a { text-decoration:none; color:#666; display: inline }
+		ol li a { text-decoration:none; color:#222; display: inline;  }
 		ol li a:hover { text-decoration:underline; }
-		/*ol li p em { display:block; }*/
 	</style>
 </head>
 <body>
@@ -40,7 +38,23 @@ require __DIR__.'/config.php';
 <div class="list2">
 	<?
 	$tweeLink = new Tweelink\Tweelink($config);
-	$tweeLink ->displayCacheContent();
+	$content = $tweeLink->getCacheContent();
+
+	echo '<ol>';
+	
+	foreach ($content as $currMonth => $links){
+		echo '</ol><h3>'.$currMonth.'</h3><ol>';
+
+		foreach ($links as $currLink) {
+			$title = empty($currLink['title']) ? $currLink['url'] : $currLink['title'];
+			$url = empty($currLink['url']) ? $currLink['url'] : '';
+
+	    	echo '<li><div class="tweelink"><p><a href="'.$url.'">'.$title.'</a></p></div></li>';
+		}
+
+	    
+	}
+	echo '</ol>';
 	?>
 </div>
 </body>
