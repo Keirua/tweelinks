@@ -95,7 +95,6 @@ class Tweelink {
                     $this->db->rollback();
                     echo $e->getMessage();
                 }
-                // $params['max_id'] = $tweets[count($tweets) - 1]->id_str;
             }
             else{
                 echo 'No new tweets !<br />';

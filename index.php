@@ -46,10 +46,10 @@ require __DIR__.'/config.php';
 		echo '</ol><h3>'.$currMonth.'</h3><ol>';
 
 		foreach ($links as $currLink) {
-			$title = empty($currLink['title']) ? $currLink['url'] : $currLink['title'];
-			$url = empty($currLink['url']) ? $currLink['url'] : '';
-
-	    	echo '<li><div class="tweelink"><p><a href="'.$url.'">'.$title.'</a></p></div></li>';
+			$title = isset($currLink['title']) ? $currLink['title'] : $currLink['url'];
+			$url = isset($currLink['url']) ? $currLink['url'] : '';
+			if (!empty ($title))
+	    		echo '<li><div class="tweelink"><p><a href="'.$url.'">'.$title.'</a></p></div></li>';
 		}
 
 	    
